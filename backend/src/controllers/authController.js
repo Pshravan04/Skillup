@@ -196,9 +196,71 @@ const resetPassword = asyncHandler(async (req, res) => {
   res.json({ message: 'Password reset successful' });
 });
 
+// @desc    Google Auth
+// @route   POST /api/auth/google
+// @access  Public
+const googleAuth = asyncHandler(async (req, res) => {
+  const { idToken } = req.body;
+  const { OAuth2Client } = require('google-auth-library');
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const { name, email, picture } = ticket.getPayload();
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // If user exists but doesn't have googleId, link it
+      if (!user.googleId) {
+        user.googleId = email; // Using email as googleId fallback or sub from payload
+        user.authProvider = 'google'; // Update provider or keep as is? Better to allow both.
+        // Actually, let's keep it simple. If email matches, we log them in.
+        // But we should update googleId if missing
+        user.googleId = ticket.getPayload().sub;
+        if (!user.profilePicture) user.profilePicture = picture;
+        await user.save();
+      }
+    } else {
+      // Create new user
+      // Default password to random string since they use Google
+      const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+
+      user = await User.create({
+        name,
+        email,
+        password: randomPassword,
+        role: 'student', // Default role
+        googleId: ticket.getPayload().sub,
+        authProvider: 'google',
+        profilePicture: picture,
+      });
+    }
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePicture: user.profilePicture,
+      token: generateToken(user._id),
+    });
+
+  } catch (error) {
+    console.error('Google Auth Error:', error);
+    res.status(401);
+    throw new Error('Invalid Google Token');
+  }
+});
+
 module.exports = {
   registerUser,
   authUser,
+  googleAuth,
   getUserProfile,
   updateUserProfile,
   forgotPassword,

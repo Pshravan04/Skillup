@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaUser, FaGraduationCap, FaChalkboardTeacher, FaUserGraduate } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
 import { ButtonLoader } from '../components/Loader';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -167,6 +168,11 @@ const Register = () => {
                             {loading ? 'Creating account...' : 'Create Account'}
                         </button>
                     </form>
+
+
+                    <div className="mt-6">
+                        <GoogleLoginButton text="Sign up with Google" />
+                    </div>
 
                     {/* Divider */}
                     <div className="relative my-6">
