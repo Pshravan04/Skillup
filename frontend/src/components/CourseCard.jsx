@@ -3,94 +3,94 @@ import { FaStar, FaArrowRight } from 'react-icons/fa';
 
 const CourseCard = ({
     course,
-    gradient = 'blue',
+    gradient = 'primary',
     onClick
 }) => {
     const gradientClasses = {
-        orange: 'from-orange-500/20 to-red-500/20',
-        blue: 'from-blue-500/20 to-purple-500/20',
-        red: 'from-pink-500/20 to-red-500/20',
-        purple: 'from-purple-500/20 to-pink-500/20',
-        teal: 'from-teal-500/20 to-blue-500/20'
-    };
-
-    const formatDate = (date) => {
-        if (!date) return '';
-        const d = new Date(date);
-        return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+        primary: 'from-brand-primary to-brand-secondary',
+        secondary: 'from-purple-500 to-indigo-500',
+        accent: 'from-rose-500 to-pink-500',
+        premium: 'from-brand-primary via-indigo-500 to-fuchsia-500',
+        emerald: 'from-emerald-500 to-teal-500'
     };
 
     const formatPrice = (price) => {
-        return price ? `$${price.toFixed(0)}` : 'Free';
+        if (price === 0) return 'FREE';
+        return price ? `$${price.toFixed(0)}` : 'FREE';
     };
 
     return (
         <div
-            className="group bg-[#1a1d29]/50 rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300 hover:translate-y-[-4px] cursor-pointer"
+            className="group glass-card rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-brand-primary/10 hover:-translate-y-2 cursor-pointer flex flex-col h-full"
             onClick={() => onClick && onClick(course)}
         >
-            {/* Course Image - Minimal Overlay */}
-            <div className="relative h-44 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradientClasses[gradient]} opacity-60`}></div>
+            {/* Visual Header */}
+            <div className="relative h-56 overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-br ${gradientClasses[gradient] || gradientClasses.primary} opacity-30 group-hover:opacity-40 transition-opacity duration-500`}></div>
                 <img
-                    src={course.thumbnail || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400'}
+                    src={course.thumbnail || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800'}
                     alt={course.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                 />
 
-                {/* Minimal Price Badge */}
-                <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-sm font-semibold border border-white/10">
-                    {course.originalPrice && (
-                        <span className="line-through text-gray-400 text-xs mr-1.5">
+                {/* Glowing Overlay for active feel */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-60"></div>
+
+                {/* Floating Status Badge */}
+                <div className="absolute top-5 left-5 glass-card px-4 py-2 rounded-2xl border-white/20 shadow-xl">
+                    <span className="text-white text-[10px] font-black uppercase tracking-widest leading-none">
+                        {course.category || 'Module 01'}
+                    </span>
+                </div>
+
+                {/* Glass Price Tag */}
+                <div className="absolute bottom-5 right-5 glass-card px-6 py-2.5 rounded-2xl border-white/20 shadow-2xl flex flex-col items-end">
+                    {course.originalPrice && course.originalPrice > course.price && (
+                        <span className="text-[10px] text-discord-text-muted line-through font-bold mb-0.5">
                             {formatPrice(course.originalPrice)}
                         </span>
                     )}
-                    <span>{formatPrice(course.price)}</span>
-                </div>
-
-                {/* Subtle Icon */}
-                <div className="absolute top-3 left-3 w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/10">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+                    <span className="text-white font-black text-sm tracking-tight">
+                        {formatPrice(course.price)}
+                    </span>
                 </div>
             </div>
 
-            {/* Course Content - Clean Spacing */}
-            <div className="p-5">
-                {/* Title and Rating */}
-                <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="text-white font-semibold text-base flex-1 line-clamp-2 leading-snug">
+            {/* Content Area */}
+            <div className="p-8 flex-1 flex flex-col">
+                <div className="mb-4">
+                    <h3 className="text-white font-black text-xl tracking-tighter leading-[1.1] mb-3 group-hover:text-brand-primary transition-colors">
                         {course.title}
                     </h3>
-                    {course.rating > 0 && (
-                        <div className="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg border border-yellow-500/20 shrink-0">
-                            <FaStar className="text-yellow-400 text-xs" />
-                            <span className="text-white font-medium text-xs">{course.rating.toFixed(1)}</span>
+                    <div className="flex items-center gap-2">
+                        <div className="flex text-brand-primary text-[10px]">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                                <FaStar key={s} className={s <= (course.rating || 5) ? 'text-brand-primary' : 'text-white/5'} />
+                            ))}
                         </div>
-                    )}
+                        <span className="text-discord-text-muted text-[10px] font-black uppercase tracking-widest">
+                            ({course.enrolledStudents?.length || 0} Students)
+                        </span>
+                    </div>
                 </div>
 
-                {/* Description - Subtle */}
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
-                    {course.description}
+                <p className="text-discord-text-muted text-sm font-medium line-clamp-2 leading-relaxed mb-8 italic">
+                    {course.description || "No description provided for this premium learning module."}
                 </p>
 
-                {/* Footer - Minimal */}
-                <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                    <div className="flex gap-2">
-                        <span className="text-xs font-medium text-gray-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5">
-                            {course.category || 'General'}
-                        </span>
-                        {course.level && (
-                            <span className="text-xs font-medium text-gray-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5">
-                                {course.level}
-                            </span>
-                        )}
+                {/* Master Footer */}
+                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-premium p-0.5 shadow-lg">
+                            <div className="w-full h-full bg-brand-dark rounded-full flex items-center justify-center font-black text-white text-[8px]">
+                                {course.instructor?.name?.charAt(0) || 'I'}
+                            </div>
+                        </div>
+                        <span className="text-white text-xs font-bold truncate max-w-[100px]">{course.instructor?.name}</span>
                     </div>
 
-                    <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 group-hover:bg-blue-500 transition-colors border border-white/5 group-hover:border-blue-500">
-                        <FaArrowRight className="text-xs text-gray-400 group-hover:text-white transition-colors" />
+                    <div className="w-12 h-12 glass-card rounded-2xl flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary transition-all duration-300">
+                        <FaArrowRight className="text-discord-text-muted group-hover:text-white group-hover:translate-x-1 transition-all" />
                     </div>
                 </div>
             </div>

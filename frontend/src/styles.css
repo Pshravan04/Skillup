@@ -4,61 +4,57 @@
 
 @layer base {
   body {
-    @apply bg-discord-dark text-discord-text font-sans antialiased;
+    @apply bg-brand-darker text-discord-text font-sans antialiased selection:bg-brand-primary/30;
+    background-image: theme('backgroundImage.aurora-gradient');
+    background-attachment: fixed;
   }
 }
 
-/* Custom Scrollbar - Minimal */
+/* Custom Scrollbar - Ultra Minimal */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-discord-light/50 rounded-full;
+  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
 }
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-discord-light;
+
+/* Glassmorphism Utilities */
+@layer components {
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  
+  .glass-button {
+    @apply bg-white/[0.05] backdrop-blur-md border border-white/10 hover:bg-white/[0.08] transition-all duration-300;
+  }
+
+  .glass-input {
+    @apply bg-white/[0.03] border border-white/10 focus:border-brand-primary/50 focus:ring-4 focus:ring-brand-primary/10 transition-all outline-none;
+  }
 }
 
 /* Gradient Utilities */
 @layer utilities {
-  .gradient-orange {
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  }
-  
-  .gradient-blue {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-  
-  .gradient-red {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  }
-  
-  .gradient-purple {
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  }
-  
-  .gradient-teal {
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent;
   }
 
-  /* Modern Card Hover - Subtle */
-  .card-hover {
-    @apply transition-all duration-200 ease-out;
+  .bg-gradient-premium {
+    @apply bg-gradient-to-br from-brand-primary to-brand-secondary;
   }
 
-  .card-hover:hover {
-    @apply transform translate-y-[-2px];
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
   }
 
   /* Fade In Animation */
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
@@ -67,6 +63,6 @@
   }
 
   .fade-in {
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }

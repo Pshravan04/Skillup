@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
-import { Link } from 'react-router-dom';
-import { FaSearch, FaFilter, FaStar, FaUser } from 'react-icons/fa';
+import { FaSearch, FaStar } from 'react-icons/fa';
+import CourseCard from '../components/CourseCard';
 
 const CourseList = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const { data } = await API.get('/courses');
-                setCourses(data);
+                const response = await API.get('/courses');
+                setCourses(response.data);
             } catch (error) {
-                console.error('Error fetching courses', error);
+                console.error('Failed to fetch courses', error);
             } finally {
                 setLoading(false);
             }
@@ -23,82 +25,96 @@ const CourseList = () => {
         fetchCourses();
     }, []);
 
+    const categories = ['All', 'Development', 'Design', 'Business', 'Marketing'];
+
     const filteredCourses = courses.filter(course => {
         const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.description.toLowerCase().includes(searchTerm.toLowerCase());
-        // const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory; 
-        // Category filtering to be implemented when backend supports it
-        return matchesSearch;
+            course.description?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
+        return matchesSearch && matchesCategory;
     });
 
-    if (loading) return <div className="text-white text-center mt-10">Loading catalog...</div>;
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-brand-primary/20 border-t-brand-primary rounded-full animate-spin"></div>
+                    <div className="text-discord-text-muted font-bold tracking-widest uppercase text-xs">Curating Catalog...</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div className="fade-in space-y-12">
+            {/* Catalog Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Explore Courses</h1>
-                    <p className="text-discord-text-muted">Discover new skills and passions.</p>
-                </div>
-
-                <div className="flex items-center space-x-4 mt-4 md:mt-0 w-full md:w-auto">
-                    <div className="relative flex-1 md:w-64">
-                        <FaSearch className="absolute left-3 top-3 text-discord-text-muted" />
-                        <input
-                            type="text"
-                            placeholder="Search courses..."
-                            className="w-full bg-discord-sidebar text-white pl-10 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-discord-blue"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-                    <button className="bg-discord-sidebar hover:bg-discord-light text-white p-2 rounded-lg transition-colors">
-                        <FaFilter />
-                    </button>
+                    <h1 className="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter">Course Catalog</h1>
+                    <p className="text-discord-text-muted font-medium text-lg leading-none">
+                        Explore <span className="text-white font-black">{filteredCourses.length}</span> curated modules for mastery.
+                    </p>
                 </div>
             </div>
 
+            {/* Filter Hub */}
+            <div className="glass-card p-4 md:p-6 rounded-[2.5rem] flex flex-col md:flex-row items-center gap-6">
+                {/* Search Box */}
+                <div className="relative flex-1 w-full">
+                    <FaSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-discord-text-muted" />
+                    <input
+                        type="text"
+                        placeholder="Search modules..."
+                        className="w-full glass-input pl-14 pr-6 py-4 rounded-2xl text-sm font-bold text-white placeholder:text-discord-text-muted/50 tracking-tight"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+
+                {/* Category Chips */}
+                <div className="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
+                    {categories.map(category => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === category
+                                ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20'
+                                : 'glass-button text-discord-text-muted hover:text-white'
+                                }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Matrix Grid */}
             {filteredCourses.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {filteredCourses.map((course) => (
-                        <div key={course._id} className="bg-discord-gray rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                            <div className="h-40 bg-discord-light flex items-center justify-center overflow-hidden">
-                                <img
-                                    src={course.thumbnail || 'https://via.placeholder.com/400x200?text=No+Thumbnail'}
-                                    alt={course.title}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/400x200?text=SkillUp' }}
-                                />
-                            </div>
-                            <div className="p-4">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-lg font-bold text-white line-clamp-1">{course.title}</h3>
-                                    <div className="flex items-center text-discord-gold text-xs font-bold bg-discord-gold/10 px-2 py-0.5 rounded">
-                                        <FaStar className="mr-1" /> 4.5
-                                    </div>
-                                </div>
-
-                                <p className="text-discord-text-muted text-sm mb-4 line-clamp-2">{course.description}</p>
-
-                                <div className="flex items-center text-xs text-discord-text-muted mb-4">
-                                    <FaUser className="mr-1" />
-                                    <span>{course.instructor?.name || 'Unknown Instructor'}</span>
-                                </div>
-
-                                <div className="flex justify-between items-center border-t border-discord-light pt-4">
-                                    <span className="text-white font-bold text-lg">${course.price}</span>
-                                    <Link to={`/course/${course._id}`} className="text-discord-blue hover:text-white font-medium text-sm transition-colors">
-                                        View Details &rarr;
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredCourses.map((course, index) => (
+                        <CourseCard
+                            key={course._id}
+                            course={course}
+                            gradient={['primary', 'secondary', 'accent', 'premium', 'emerald'][index % 5]}
+                            onClick={() => navigate(`/course/${course._id}`)}
+                        />
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-20">
-                    <h3 className="text-xl text-white font-bold mb-2">No courses found</h3>
-                    <p className="text-discord-text-muted">Try adjusting your search terms.</p>
+                <div className="text-center py-32 glass-card rounded-[3rem] border-dashed border-white/5 mx-auto max-w-2xl bg-white/[0.01]">
+                    <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8 border border-white/5">
+                        <FaSearch className="text-2xl text-discord-text-muted" />
+                    </div>
+                    <h3 className="text-2xl font-black text-white mb-3 tracking-tight italic">No Modules Found</h3>
+                    <p className="text-discord-text-muted font-bold leading-relaxed mb-10 px-8">
+                        The search query returned an empty matrix. Adjust your parameters and try again.
+                    </p>
+                    <button
+                        onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
+                        className="px-10 py-4 glass-button text-white font-black rounded-2xl uppercase text-[10px] tracking-widest hover:bg-brand-primary transition-all"
+                    >
+                        Reset Matrix
+                    </button>
                 </div>
             )}
         </div>

@@ -98,39 +98,45 @@ const Chat = () => {
 
     return (
         <>
-            {/* Floating Chat Button */}
+            {/* Floating Chat Button - Matrix Nexus */}
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 z-50"
+                    className="fixed bottom-8 right-8 w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center shadow-2xl shadow-brand-primary/40 transition-all duration-500 z-50 hover:scale-110 active:scale-90 group border border-white/20"
                 >
-                    <FaComments className="text-white text-2xl" />
+                    <div className="absolute inset-0 bg-gradient-premium rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+                    <FaComments className="text-white text-2xl relative z-10" />
                     {unreadCount > 0 && (
-                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 rounded-full flex items-center justify-center text-white text-[10px] font-black border-2 border-brand-darker z-20 shadow-xl">
                             {unreadCount > 9 ? '9+' : unreadCount}
                         </div>
                     )}
                 </button>
             )}
 
-            {/* Chat Window */}
+            {/* Chat Window - Immersive Interface */}
             {isOpen && (
-                <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-discord-dark rounded-2xl shadow-2xl border border-white/10 flex flex-col z-50 overflow-hidden">
-                    {/* Header */}
-                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <FaComments className="text-white text-xl" />
-                            <h3 className="text-white font-semibold">Messages</h3>
+                <div className="fixed bottom-8 right-8 w-[420px] h-[650px] glass-card rounded-[2.5rem] shadow-3xl flex flex-col z-50 overflow-hidden border-white/10 fade-in bg-brand-darker/60 backdrop-blur-[80px]">
+                    {/* Header - Matrix Node */}
+                    <div className="bg-white/[0.03] p-6 flex items-center justify-between border-b border-white/5">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center border border-brand-primary/30">
+                                <FaComments className="text-brand-primary text-lg" />
+                            </div>
+                            <div>
+                                <h3 className="text-white font-black text-sm tracking-tight">SkillUp Nexus</h3>
+                                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest leading-none mt-1">Operational</p>
+                            </div>
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+                            className="w-10 h-10 glass-button rounded-xl flex items-center justify-center text-discord-text-muted hover:text-white transition-all border-white/5"
                         >
                             <FaTimes />
                         </button>
                     </div>
 
-                    {/* Content */}
+                    {/* Content Matrix */}
                     <div className="flex-1 flex overflow-hidden">
                         {!activeConversation ? (
                             <ConversationList
