@@ -33,19 +33,24 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl glass-card px-8 h-20 rounded-[2.5rem] flex items-center justify-between z-[100] transition-all duration-300">
-            <Link to="/" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 bg-gradient-premium rounded-xl flex items-center justify-center font-black text-white shadow-lg shadow-brand-primary/20 transform group-hover:rotate-6 transition-transform">S</div>
-                <span className="text-white font-black text-xl tracking-tighter">SkillUp</span>
-            </Link>
+        <nav className="fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl glass-card px-8 h-20 rounded-[2.5rem] grid grid-cols-3 items-center z-[100] transition-all duration-300">
+            {/* Left Column: Brand */}
+            <div className="flex justify-start">
+                <Link to="/" className="flex items-center gap-3 group">
+                    <div className="w-10 h-10 bg-gradient-premium rounded-xl flex items-center justify-center font-black text-white shadow-lg shadow-brand-primary/20 transform group-hover:rotate-6 transition-transform">S</div>
+                    <span className="text-white font-black text-xl tracking-tighter">SkillUp</span>
+                </Link>
+            </div>
 
-            <ul className="hidden md:flex items-center gap-8 font-bold text-sm text-discord-text-muted">
+            {/* Center Column: Navigation */}
+            <ul className="hidden md:flex items-center justify-center gap-8 font-bold text-sm text-discord-text-muted">
                 <li><Link to="/courses" className="hover:text-white transition-colors">Course Catalog</Link></li>
                 <li><Link to="/register" className="hover:text-white transition-colors">Instructor Hub</Link></li>
                 <li><Link to="/about" className="hover:text-white transition-colors">Enterprise</Link></li>
             </ul>
 
-            <div className="flex items-center gap-4">
+            {/* Right Column: Auth */}
+            <div className="flex items-center justify-end gap-4">
                 <Link to="/login" className="px-6 py-2.5 font-bold text-sm text-white hover:text-brand-primary transition-colors">
                     Login
                 </Link>

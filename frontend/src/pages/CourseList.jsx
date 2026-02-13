@@ -65,7 +65,7 @@ const CourseList = () => {
                     <input
                         type="text"
                         placeholder="Search modules..."
-                        className="w-full glass-input pl-14 pr-6 py-4 rounded-2xl text-sm font-bold text-white placeholder:text-discord-text-muted/50 tracking-tight"
+                        className="w-full h-14 glass-input pl-14 pr-6 rounded-2xl text-sm font-bold text-white placeholder:text-discord-text-muted/50 tracking-tight"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -77,7 +77,7 @@ const CourseList = () => {
                         <button
                             key={category}
                             onClick={() => setSelectedCategory(category)}
-                            className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === category
+                            className={`px-6 h-14 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${selectedCategory === category
                                 ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20'
                                 : 'glass-button text-discord-text-muted hover:text-white'
                                 }`}

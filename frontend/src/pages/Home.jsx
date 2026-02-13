@@ -73,10 +73,10 @@ const Home = () => {
                             A next-generation learning platform designed for ambitious professionals. Master modern skills with a premium experience.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-24">
+                        <div className="flex flex-col sm:flex-row gap-5 justify-center items-stretch sm:items-center mb-24">
                             <button
                                 onClick={handleGetStarted}
-                                className="w-full sm:w-auto px-10 py-4 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transform hover:-translate-y-1 flex items-center justify-center gap-3"
+                                className="w-full sm:w-auto h-16 px-10 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transform hover:-translate-y-1 flex items-center justify-center gap-3"
                             >
                                 {user ? 'Launch Dashboard' : 'Get Started Now'}
                                 <FaArrowRight className="text-sm" />
@@ -84,10 +84,10 @@ const Home = () => {
 
                             <Link
                                 to="/courses"
-                                className="w-full sm:w-auto px-10 py-4 glass-button text-white font-bold rounded-2xl flex items-center justify-center gap-3"
+                                className="w-full sm:w-auto h-16 px-10 glass-button text-white font-bold rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1"
                             >
-                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                                    <FaPlay className="text-[10px] ml-0.5" />
+                                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                                    <FaPlay className="text-[8px] ml-0.5" />
                                 </div>
                                 Browse Catalog
                             </Link>

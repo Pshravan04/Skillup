@@ -149,7 +149,7 @@ const InstructorDashboard = () => {
                         <p className="text-discord-text-muted max-w-sm mx-auto mb-10 font-bold leading-relaxed">
                             Bring your knowledge to life by launching your first course and reaching thousands of students worldwide.
                         </p>
-                        <Link to="/courses/create" className="px-10 py-4 bg-brand-primary text-white font-black rounded-2xl hover:scale-105 transition-transform inline-block uppercase text-xs tracking-[0.2em] shadow-lg shadow-brand-primary/20">
+                        <Link to="/courses/create" className="px-10 h-16 bg-brand-primary text-white font-black rounded-2xl hover:scale-105 transition-transform flex items-center justify-center uppercase text-xs tracking-[0.2em] shadow-lg shadow-brand-primary/20">
                             Create First Program
                         </Link>
                     </div>

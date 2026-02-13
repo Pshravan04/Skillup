@@ -156,7 +156,7 @@ const StudentDashboard = () => {
                                 </p>
                                 <Link
                                     to="/courses"
-                                    className="px-8 py-3 bg-brand-primary text-white font-black rounded-2xl shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform inline-block uppercase text-xs tracking-widest"
+                                    className="px-8 h-16 bg-brand-primary text-white font-black rounded-2xl shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform flex items-center justify-center uppercase text-xs tracking-widest"
                                 >
                                     Browse Catalog
                                 </Link>

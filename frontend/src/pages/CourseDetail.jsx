@@ -139,23 +139,23 @@ const CourseDetail = () => {
                     <div className="flex gap-4">
                         {user && user.role === 'student' && !isEnrolled && (
                             course.price > 0 ? (
-                                <button onClick={() => setShowPaymentModal(true)} className="px-10 py-4 bg-brand-primary hover:bg-brand-primary/90 text-white font-black rounded-2xl shadow-xl shadow-brand-primary/20 transition-all flex items-center gap-3 active:scale-95">
+                                <button onClick={() => setShowPaymentModal(true)} className="px-10 h-16 bg-brand-primary hover:bg-brand-primary/90 text-white font-black rounded-2xl shadow-xl shadow-brand-primary/20 transition-all flex items-center justify-center gap-3 active:scale-95">
                                     <span className="uppercase text-xs tracking-widest">Enroll In Program</span>
                                 </button>
                             ) : (
-                                <button onClick={handleEnroll} className="px-10 py-4 bg-gradient-premium text-white font-black rounded-2xl shadow-xl shadow-indigo-500/20 transition-all flex items-center gap-3 active:scale-95">
+                                <button onClick={handleEnroll} className="px-10 h-16 bg-gradient-premium text-white font-black rounded-2xl shadow-xl shadow-indigo-500/20 transition-all flex items-center justify-center gap-3 active:scale-95">
                                     <span className="uppercase text-xs tracking-widest">Start Path Now</span>
                                 </button>
                             )
                         )}
                         {isEnrolled && (
-                            <div className="flex items-center gap-3 px-8 py-4 glass-card rounded-2xl border-emerald-500/30 bg-emerald-500/10">
+                            <div className="flex items-center justify-center gap-3 px-8 h-16 glass-card rounded-2xl border-emerald-500/30 bg-emerald-500/10">
                                 <FaCheckCircle className="text-emerald-500" />
                                 <span className="text-emerald-500 font-black text-xs uppercase tracking-widest">Active Enrollment</span>
                             </div>
                         )}
                         {(isOwner || (user && user.role === 'admin')) && (
-                            <Link to={`/course/${id}/manage`} className="px-10 py-4 glass-button text-white font-black rounded-2xl flex items-center gap-3 hover:bg-brand-primary transition-all">
+                            <Link to={`/course/${id}/manage`} className="px-10 h-16 glass-button text-white font-black rounded-2xl flex items-center justify-center gap-3 hover:bg-brand-primary transition-all">
                                 <span className="uppercase text-xs tracking-widest">Manage Control Hub</span>
                             </Link>
                         )}
@@ -176,9 +176,9 @@ const CourseDetail = () => {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab.id
-                                        ? 'bg-brand-primary text-white shadow-lg'
-                                        : 'text-discord-text-muted hover:text-white hover:bg-white/5'
+                                className={`flex-1 h-14 flex items-center justify-center gap-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab.id
+                                    ? 'bg-brand-primary text-white shadow-lg'
+                                    : 'text-discord-text-muted hover:text-white hover:bg-white/5'
                                     }`}
                             >
                                 <tab.icon className="text-sm" />

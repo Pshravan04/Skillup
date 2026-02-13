@@ -125,12 +125,12 @@ const Register = () => {
                                 <button
                                     type="button"
                                     onClick={() => setRole('student')}
-                                    className={`p-6 rounded-[2rem] border-2 transition-all group ${role === 'student'
+                                    className={`h-36 rounded-[2rem] border-2 transition-all flex flex-col items-center justify-center gap-1 ${role === 'student'
                                         ? 'border-brand-primary bg-brand-primary/10'
                                         : 'border-white/5 bg-white/[0.02] hover:border-white/20'
                                         }`}
                                 >
-                                    <FaUserGraduate className={`text-2xl mx-auto mb-3 ${role === 'student' ? 'text-brand-primary' : 'text-discord-text-muted group-hover:text-white'
+                                    <FaUserGraduate className={`text-2xl mb-2 ${role === 'student' ? 'text-brand-primary' : 'text-discord-text-muted group-hover:text-white'
                                         }`} />
                                     <p className={`text-[10px] font-black uppercase tracking-widest ${role === 'student' ? 'text-white' : 'text-discord-text-muted group-hover:text-white'
                                         }`}>
@@ -140,12 +140,12 @@ const Register = () => {
                                 <button
                                     type="button"
                                     onClick={() => setRole('instructor')}
-                                    className={`p-6 rounded-[2rem] border-2 transition-all group ${role === 'instructor'
+                                    className={`h-36 rounded-[2rem] border-2 transition-all flex flex-col items-center justify-center gap-1 ${role === 'instructor'
                                         ? 'border-brand-primary bg-brand-primary/10'
                                         : 'border-white/5 bg-white/[0.02] hover:border-white/20'
                                         }`}
                                 >
-                                    <FaChalkboardTeacher className={`text-2xl mx-auto mb-3 ${role === 'instructor' ? 'text-brand-primary' : 'text-discord-text-muted group-hover:text-white'
+                                    <FaChalkboardTeacher className={`text-2xl mb-2 ${role === 'instructor' ? 'text-brand-primary' : 'text-discord-text-muted group-hover:text-white'
                                         }`} />
                                     <p className={`text-[10px] font-black uppercase tracking-widest ${role === 'instructor' ? 'text-white' : 'text-discord-text-muted group-hover:text-white'
                                         }`}>
@@ -159,7 +159,7 @@ const Register = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-5 bg-gradient-premium text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-3 active:scale-[0.98]"
+                            className="w-full h-16 bg-gradient-premium text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-3 active:scale-[0.98]"
                         >
                             {loading && <ButtonLoader />}
                             {loading ? 'Initializing...' : 'Construct Profile'}
