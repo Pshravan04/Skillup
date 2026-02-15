@@ -16,7 +16,19 @@ API.interceptors.request.use(
         }
         return config;
     },
+    (error) => Promise.reject(error)
+);
+
+// Add a response interceptor for global error handling
+API.interceptors.response.use(
+    (response) => response,
     (error) => {
+        if (!error.response) {
+            console.error('NETWORK ERROR DETECTED:');
+            console.error('- BaseURL:', API.defaults.baseURL);
+            console.error('- Message:', error.message);
+            console.error('Check if your backend is awake at:', API.defaults.baseURL.replace('/api', ''));
+        }
         return Promise.reject(error);
     }
 );
